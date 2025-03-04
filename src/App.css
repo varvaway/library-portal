@@ -56,6 +56,68 @@
   font-size: 32px;
 }
 
+/* Стили для оверлея (затемненного фона) */
+.modal-overlay {
+  position: fixed; /* Фиксированное позиционирование */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+  display: flex;
+  justify-content: center; /* Центрирование по горизонтали */
+  align-items: center; /* Центрирование по вертикали */
+  z-index: 1000; /* Убедитесь, что оверлей поверх всего */
+}
+
+/* Стили для модального окна */
+.modal-content {
+  background-color: white; /* Белый фон модального окна */
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Тень для модального окна */
+  z-index: 1001; /* Убедитесь, что модальное окно поверх оверлея */
+}
+
+/* Стили для заголовка модального окна */
+.modal-title {
+  color: #650404;
+  font-family: 'Lovelace', sans-serif; /* Убедитесь, что шрифт Lovelace подключен */
+  text-align: center; /* Центрирование заголовка */
+}
+
+/* Стили для ошибок */
+.error {
+  border-color: #650404;
+}
+
+.error-message {
+  color: 650404;
+  margin-bottom: 10px;
+  text-align: center; /* Центрирование сообщения об ошибке */
+}
+
+/* Стили для кнопок */
+.modal-content button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%; 
+}
+
+.modal-content button[type="submit"] {
+  background-color: #4d4241;
+}
+
+.modal-content button[type="button"] {
+  background-color: #dc3545;
+}
+
 /* Стили для логотипа */
 .logo-image {
   width: 50px; 

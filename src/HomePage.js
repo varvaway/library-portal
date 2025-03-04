@@ -5,13 +5,17 @@ import logo from './images/logo192.png';
 import contactPhoto from './images/contact-photo.png';
 
 function HomePage() {
-  // Состояния для полей формы
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [isChecked, setIsChecked] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const [password, setPassword] = useState('');
+  const [nameError, setNameError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  // Обработчик отправки формы
   const handleSubmit = (e) => {
     e.preventDefault();
     setName('');
@@ -24,9 +28,71 @@ function HomePage() {
     setIsSubmitted(false);
   };
 
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    if (fullName !== 'Варвара Кнороз') {
+      setNameError(true);
+      setErrorMessage('Такого пользователя не существует, пройдите регистрацию в библиотеке');
+      return;
+    }
+
+    if (password !== 'wiwiwi') {
+      setPasswordError(true);
+      setErrorMessage('Вы ввели неправильный пароль');
+      setPassword('');
+      return;
+    }
+
+    // Если всё правильно, переходим на страницу профиля
+    window.location.href = '/profile';
+  };
+
+  const Modal = ({ onClose }) => {
+    return (
+      <div className="modal-overlay">
+        <div className="modal-content">
+          <h2 className="modal-title">Авторизация</h2>
+          <form onSubmit={handleLogin}>
+            <div className="form-group">
+              <label htmlFor="fullName">Фамилия и имя</label>
+              <input
+                type="text"
+                id="fullName"
+                value={fullName}
+                onChange={(e) => {
+                  setFullName(e.target.value);
+                  setNameError(false);
+                }}
+                className={nameError ? 'error' : ''}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Пароль</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setPasswordError(false);
+                }}
+                className={passwordError ? 'error' : ''}
+                required
+              />
+            </div>
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
+            <button type="submit">Войти</button>
+          </form>
+          <button onClick={onClose}>Закрыть</button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="App">
-      {/* Всплывающее сообщение */}
       {isSubmitted && (
         <div className="popup">
           <div className="popup-content">
@@ -36,11 +102,12 @@ function HomePage() {
         </div>
       )}
 
-      {/* Шапка */}
+      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
+
       <header className="App-header">
         <div className="logo">
           <Link to="/">
-            <img src={logo} alt="Логотип" className="logo-image" /> {/* Используем изображение */}
+            <img src={logo} alt="Логотип" className="logo-image" />
           </Link>
         </div>
         <div className="catalog-link">
@@ -50,12 +117,11 @@ function HomePage() {
           <input type="text" placeholder="Найти нужную книгу..." />
         </div>
         <div className="account">
-          <button>Вход в аккаунт</button>
+          <button onClick={() => setIsModalOpen(true)}>Вход в аккаунт</button>
         </div>
       </header>
 
       <main>
-        {/* Блок с фоновым изображением */}
         <div className="hero-section">
           <h1>Юношеская библиотека им. А. П. Гайдара</h1>
           <p className="library-description">
@@ -63,7 +129,6 @@ function HomePage() {
           </p>
         </div>
 
-        {/* Остальные секции */}
         <section className="form-section">
           <h1>Как стать читателем?</h1>
           <p>Оставьте заявку прямо сейчас, мы свяжемся с Вами незамедлительно!</p>
@@ -145,7 +210,6 @@ function HomePage() {
         </section>
       </main>
 
-      {/* Подвал */}
       <footer className="footer">
         <p>хехе это подвал, а я - автор сайта</p>
       </footer>
