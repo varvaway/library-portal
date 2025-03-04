@@ -45,10 +45,10 @@ function HomePage() {
       </header>
 
       <main>
-        <h1>БИБЛИОТЕКА</h1>
+        <h1>Юношеская библиотека им. А. П. Гайдара</h1>
         {/* Текст под заголовком */}
         <p className="library-description">
-          Юношеская библиотека им. А. П. Гайдара — одна из старейших библиотек Петроградского района. Благодаря сотрудникам библиотеки здесь сохранились исторические помещения с подлинной лепниной и прекрасными печами, а также уникальный балкон.
+          Юношеская библиотека имени Аркадия Петровича Гайдара — одна из старейших библиотек Петроградского района. Благодаря сотрудникам библиотеки здесь сохранились исторические помещения с подлинной лепниной и прекрасными печами, а также уникальный балкон.
         </p>
         <nav>
           <a href="/events">ДОП СТРАНИЦА 1</a>
@@ -61,7 +61,7 @@ function HomePage() {
           <p>Оставьте заявку прямо сейчас, мы свяжемся с Вами незамедлительно!</p>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="name">Фамилия и имя *</label>
+              <label htmlFor="name">Фамилия и имя</label>
               <input
                 type="text"
                 id="name"
@@ -71,7 +71,7 @@ function HomePage() {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="phone">Телефон *</label>
+              <label htmlFor="phone">Телефон</label>
               <input
                 type="tel"
                 id="phone"
@@ -113,7 +113,7 @@ function HomePage() {
         <section className="contact-section">
           <h1>Контактная информация</h1>
           <div className="contact-info">
-            <p><strong>Адрес:</strong> Дворцовая набережная, 38, Санкт-Петербург, Россия</p>
+            <p><strong>Адрес:</strong> Большой проспект П.С., 18, лит. А, Санкт-Петербург, Россия</p>
             <p><strong>Телефон:</strong> +7 (812) 00000000</p>
             <p><strong>Часы работы:</strong> C 9:00 до 17:00</p>
             <p><strong>E-mail:</strong> simpletemplate@example.ru</p>
