@@ -1,16 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import './App.css';
 import logo from './images/logo192.png';
 
 function CatalogPage() {
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    // Запрос к API для получения данных
+    axios.get('http://localhost:5001/api/books')
+      .then(response => {
+        console.log('Данные получены:', response.data);
+        setBooks(response.data);
+      })
+      .catch(error => {
+        console.error('Ошибка при получении данных:', error);
+      });
+  }, []);
+
   return (
     <div className="App">
-            {/* Шапка */}
-            <header className="App-header">
+      {/* Шапка */}
+      <header className="App-header">
         <div className="logo">
           <Link to="/">
-          <img src={logo} alt="Логотип" className="logo-image" />
+            <img src={logo} alt="Логотип" className="logo-image" />
           </Link>
         </div>
         <div className="catalog-link">
@@ -24,14 +39,36 @@ function CatalogPage() {
         </div>
       </header>
 
-
       <main>
         {/* Заголовок "КАТАЛОГ" */}
         <h1 className="catalog-title">КАТАЛОГ</h1>
 
-        {/* Здесь будет содержимое страницы каталога */}
+        {/* Таблица с книгами */}
         <div className="catalog-content">
-          <p>Здесь будет список книг или другие элементы каталога.</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Код книги</th>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Год издания</th>
+                <th>ISBN</th>
+                <th>Статус</th>
+              </tr>
+            </thead>
+            <tbody>
+              {books.map(book => (
+                <tr key={book.КодКниги}>
+                  <td>{book.КодКниги}</td>
+                  <td>{book.Название}</td>
+                  <td>{book.Описание}</td>
+                  <td>{book.ГодИздания}</td>
+                  <td>{book.ISBN}</td>
+                  <td>{book.Статус}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </main>
 
