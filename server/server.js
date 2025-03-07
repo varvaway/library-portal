@@ -1,31 +1,23 @@
 const express = require('express');
 const sql = require('mssql');
-const cors = require('cors'); // Импортируем cors
+const cors = require('cors');
 const app = express();
-const port = 5001; // Измените порт, если нужно
+const port = 5001;
 
 // Включаем CORS
 app.use(cors());
 
 // Конфигурация подключения к SQL Server
-//const config = {
-//  server: 'MISS\SQLEXPRESS03', 
-//  database: 'LibraryDB', 
-//  options: {
-//    encrypt: false, 
-//    trustServerCertificate: true,
-//  },
-//};
-
 const config = {
-    server: 'localhost\\SQLEXPRESS03', // или '.\SQLEXPRESS03'
-    database: 'LibraryDB',
-    options: {
-      encrypt: false,
-      trustServerCertificate: true,
-      integratedSecurity: true, 
-    },
-  };
+  server: '.\SQLEXPRESS03', 
+  database: 'LibraryDB',
+  options: {
+    encrypt: false,
+    trustServerCertificate: true,
+    integratedSecurity: true, 
+    connectTimeout: 30000,
+  },
+};
 
 // Подключение к базе данных
 sql.connect(config, (err) => {
@@ -42,8 +34,11 @@ app.use(express.json());
 // Пример API для получения данных
 app.get('/api/books', async (req, res) => {
   try {
+    console.log('Попытка подключения к базе данных...');
     const request = new sql.Request();
-    const result = await request.query('SELECT * FROM Книги'); // Замените на ваш запрос
+    console.log('Выполнение SQL-запроса...');
+    const result = await request.query('SELECT * FROM Книги'); 
+    console.log('Данные получены:', result.recordset);
     res.json(result.recordset);
   } catch (err) {
     console.error('Ошибка при выполнении запроса:', err);
