@@ -21,7 +21,7 @@ function HomePage() {
     setName('');
     setPhone('');
     setIsChecked(false);
-    setIsSubmitted(true); 
+    setIsSubmitted(true);
   };
 
   const closePopup = () => {
@@ -130,43 +130,45 @@ function HomePage() {
         </div>
 
         <section className="form-section">
-          <h1>Как стать читателем?</h1>
-          <p>Оставьте заявку прямо сейчас, мы свяжемся с Вами незамедлительно!</p>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="name">Фамилия и имя</label>
-              <input
-                type="text"
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="phone">Телефон</label>
-              <input
-                type="tel"
-                id="phone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={isChecked}
-                  onChange={(e) => setIsChecked(e.target.checked)}
-                  required
-                />
-                пока хз путь будет
-              </label>
-            </div>
-            <button type="submit">Оставить заявку</button>
-          </form>
-        </section>
+  <div className="form-container">
+    <h1>Как стать читателем?</h1>
+    <p>Оставьте заявку прямо сейчас, мы свяжемся с Вами незамедлительно!</p>
+    <form onSubmit={handleSubmit}>
+      <div className="form-group">
+        <label htmlFor="name">Фамилия и имя</label>
+        <input
+          type="text"
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="phone">Телефон</label>
+        <input
+          type="tel"
+          id="phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label>
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={(e) => setIsChecked(e.target.checked)}
+            required
+          />
+          С условиями библиотеки ознакомлен(а)!
+        </label>
+      </div>
+      <button type="submit">Оставить заявку</button>
+    </form>
+  </div>
+</section>
 
         <section className="map-section">
           <h1>Как нас найти</h1>
@@ -185,7 +187,7 @@ function HomePage() {
           <div className="contact-container">
             <div className="contact-left">
               <div className="contact-photo">
-                <img src={contactPhoto} alt="Дзынь!" />
+                <img src={contactPhoto} alt="Дзынь!" className="contact-photo-img" />
               </div>
               <div className="contact-info">
                 <h1>Контактная информация</h1>
