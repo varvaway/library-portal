@@ -1,11 +1,11 @@
 const express = require('express');
 const sql = require('mssql/msnodesqlv8');
-//const cors = require('cors');
+const cors = require('cors');
 const app = express();
 const port = 5001;
 
 // Включаем CORS
-//app.use(cors());
+app.use(cors());
 
 // Конфигурация подключения к SQL Server
 const config = {
