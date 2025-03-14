@@ -1,16 +1,19 @@
 const express = require('express');
-const sql = require('mssql');
-const cors = require('cors');
+const sql = require('mssql/msnodesqlv8');
+//const cors = require('cors');
 const app = express();
 const port = 5001;
 
 // Включаем CORS
-app.use(cors());
+//app.use(cors());
 
 // Конфигурация подключения к SQL Server
 const config = {
-  server: '.\SQLEXPRESS03', 
+  user: 'test',
+  password: '1003',
+  server: 'localhost\\SQLEXPRESS03', 
   database: 'LibraryDB',
+  driver: 'msnodesqlv8',
   options: {
     encrypt: false,
     trustServerCertificate: true,

@@ -57,14 +57,14 @@ function CatalogPage() {
               </tr>
             </thead>
             <tbody>
-              {books.map(book => (
-                <tr key={book.КодКниги}>
-                  <td>{book.КодКниги}</td>
-                  <td>{book.Название}</td>
-                  <td>{book.Описание}</td>
-                  <td>{book.ГодИздания}</td>
-                  <td>{book.ISBN}</td>
-                  <td>{book.Статус}</td>
+              {books.map(Книги => (
+                <tr key={Книги.КодКниги}>
+                  <td>{Книги.КодКниги}</td>
+                  <td>{Книги.Название}</td>
+                  <td>{Книги.Описание}</td>
+                  <td>{Книги.ГодИздания}</td>
+                  <td>{Книги.ISBN}</td>
+                  <td>{Книги.Статус}</td>
                 </tr>
               ))}
             </tbody>

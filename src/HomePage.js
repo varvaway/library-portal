@@ -44,7 +44,6 @@ function HomePage() {
       return;
     }
 
-    // Если всё правильно, переходим на страницу профиля
     window.location.href = '/profile';
   };
 
@@ -196,8 +195,8 @@ function HomePage() {
                 <p><strong>E-mail:</strong> gaidara-spb@mail.ru</p>
                 <p><strong>Социальные сети:</strong></p>
                 <div className="social-links">
-                  <a href="https://vk.com/gaidaralib" target="_blank" rel="noopener noreferrer">gaidaralib</a>
-                  <a href="https://t.me/gaidarlibrary" target="_blank" rel="noopener noreferrer">gaidaralibrary</a>
+                  <a href="https://vk.com/gaidaralib" target="_blank" rel="noopener noreferrer"> ВК: gaidaralib</a>
+                  <a href="https://t.me/gaidarlibrary" target="_blank" rel="noopener noreferrer">ТГ: gaidaralibrary</a>
                 </div>
               </div>
             </div>

@@ -56,7 +56,7 @@
   font-size: 32px;
 }
 
-/* Стили для оверлея (затемненного фона) */
+/* Стили для оверлея*/
 .modal-overlay {
   position: fixed;
   top: 0;
