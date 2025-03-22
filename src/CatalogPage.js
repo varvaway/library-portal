@@ -8,7 +8,6 @@ function CatalogPage() {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    // Запрос к API для получения данных
     axios.get('http://localhost:5001/api/books')
       .then(response => {
         console.log('Данные получены:', response.data);
@@ -80,7 +79,7 @@ function CatalogPage() {
 
       {/* Подвал */}
       <footer className="footer">
-        <p>хехе это подвал, а я - автор сайта</p>
+      <p>с 2025 ООО "Кнороз&Со" Все права защищены. Перепечатка и любое использование материалов возможно только при наличии ссылки на первоисточник.</p>
       </footer>
     </div>
   );

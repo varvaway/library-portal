@@ -1,23 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { Link } from 'react-router-dom';
 import logo from './images/logo192.png';
+import axios from 'axios';
 
 function ProfilePage() {
-  // Пример данных пользователя
-  const user = {
-    fullName: 'Варвара Кнороз',
-    email: 'varvara@example.com',
-    phone: '+7 (123) 456-78-90',
-    borrowedBooks: [
-      { title: '1984', author: 'Джордж Оруэлл', dueDate: '2023-12-01' },
-      { title: 'Мастер и Маргарита', author: 'Михаил Булгаков', dueDate: '2023-11-25' },
-    ],
-    readingHistory: [
-      { title: 'Преступление и наказание', author: 'Фёдор Достоевский', returnedDate: '2023-10-15' },
-      { title: 'Война и мир', author: 'Лев Толстой', returnedDate: '2023-09-20' },
-    ],
-  };
+  const [user, setUser] = useState(null);
+  const [reservations, setReservations] = useState([]);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+      setUser(storedUser);
+
+      // Получаем бронирования пользователя
+      axios.get(`http://localhost:5001/api/reservations/${storedUser.КодПользователя}`)
+        .then(response => {
+          setReservations(response.data);
+        })
+        .catch(error => {
+          console.error('Ошибка при получении бронирований:', error);
+        });
+    }
+  }, []);
+
+  if (!user) {
+    return <div>Пользователь не авторизован</div>;
+  }
 
   return (
     <div className="App">
@@ -44,38 +53,26 @@ function ProfilePage() {
           <div className="profile-info">
             <div className="profile-details">
               <h2>Личная информация</h2>
-              <p><strong>ФИО:</strong> {user.fullName}</p>
-              <p><strong>Email:</strong> {user.email}</p>
-              <p><strong>Телефон:</strong> {user.phone}</p>
+              <p><strong>ФИО:</strong> {user.Имя} {user.Фамилия}</p>
+              <p><strong>Email:</strong> {user.ЭлектроннаяПочта}</p>
             </div>
 
             <div className="borrowed-books">
-              <h2>Взятые книги</h2>
-              {user.borrowedBooks.length > 0 ? (
+              <h2>Бронирования</h2>
+              {reservations.length > 0 ? (
                 <ul>
-                  {user.borrowedBooks.map((book, index) => (
+                  {reservations.map((reservation, index) => (
                     <li key={index}>
-                      <strong>{book.title}</strong> - {book.author} (до {book.dueDate})
+                      <strong>Код бронирования:</strong> {reservation.КодБронирования}
+                      <br />
+                      <strong>Дата бронирования:</strong> {new Date(reservation.ДатаБронирования).toLocaleDateString()}
+                      <br />
+                      <strong>Статус:</strong> {reservation.Статус}
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p>У вас нет взятых книг.</p>
-              )}
-            </div>
-
-            <div className="reading-history">
-              <h2>История чтения</h2>
-              {user.readingHistory.length > 0 ? (
-                <ul>
-                  {user.readingHistory.map((book, index) => (
-                    <li key={index}>
-                      <strong>{book.title}</strong> - {book.author} (возвращена {book.returnedDate})
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>История чтения пуста.</p>
+                <p>У вас нет активных бронирований.</p>
               )}
             </div>
           </div>
@@ -83,7 +80,7 @@ function ProfilePage() {
       </main>
 
       <footer className="footer">
-        <p>хехе это подвал, а я - автор сайта</p>
+      <p>с 2025 ООО "Кнороз&Со" Все права защищены. Перепечатка и любое использование материалов возможно только при наличии ссылки на первоисточник.</p>
       </footer>
     </div>
   );

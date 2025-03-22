@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import logo from './images/logo192.png';
 import contactPhoto from './images/contact-photo.png';
 
@@ -28,23 +29,27 @@ function HomePage() {
     setIsSubmitted(false);
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-
-    if (fullName !== 'Варвара Кнороз') {
-      setNameError(true);
-      setErrorMessage('Такого пользователя не существует, пройдите регистрацию в библиотеке');
-      return;
+  
+    try {
+      const response = await axios.post('http://localhost:5001/api/login', {
+        fullName,
+        password,
+      });
+  
+      if (response.data.success) {
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        window.location.href = '/profile';
+      } else {
+        setErrorMessage('Неверные данные');
+        setNameError(true);
+        setPasswordError(true);
+      }
+    } catch (error) {
+      console.error('Ошибка при авторизации:', error);
+      setErrorMessage('Ошибка сервера');
     }
-
-    if (password !== 'wiwiwi') {
-      setPasswordError(true);
-      setErrorMessage('Вы ввели неправильный пароль');
-      setPassword('');
-      return;
-    }
-
-    window.location.href = '/profile';
   };
 
   const Modal = ({ onClose }) => {
@@ -129,45 +134,45 @@ function HomePage() {
         </div>
 
         <section className="form-section">
-  <div className="form-container">
-    <h1>Как стать читателем?</h1>
-    <p>Оставьте заявку прямо сейчас, мы свяжемся с Вами незамедлительно!</p>
-    <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label htmlFor="name">Фамилия и имя</label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="phone">Телефон</label>
-        <input
-          type="tel"
-          id="phone"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          required
-        />
-      </div>
-      <div className="form-group">
-        <label>
-          <input
-            type="checkbox"
-            checked={isChecked}
-            onChange={(e) => setIsChecked(e.target.checked)}
-            required
-          />
-          С условиями библиотеки ознакомлен(а)!
-        </label>
-      </div>
-      <button type="submit">Оставить заявку</button>
-    </form>
-  </div>
-</section>
+          <div className="form-container">
+            <h1>Как стать читателем?</h1>
+            <p>Оставьте заявку прямо сейчас, мы свяжемся с Вами незамедлительно!</p>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="name">Фамилия и имя</label>
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="phone">Телефон</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={isChecked}
+                    onChange={(e) => setIsChecked(e.target.checked)}
+                    required
+                  />
+                  С условиями библиотеки ознакомлен(а)!
+                </label>
+              </div>
+              <button type="submit">Оставить заявку</button>
+            </form>
+          </div>
+        </section>
 
         <section className="map-section">
           <h1>Как нас найти</h1>
@@ -212,7 +217,7 @@ function HomePage() {
       </main>
 
       <footer className="footer">
-        <p>хехе это подвал, а я - автор сайта</p>
+        <p>с 2025 ООО "Кнороз&Со" Все права защищены. Перепечатка и любое использование материалов возможно только при наличии ссылки на первоисточник.</p>
       </footer>
     </div>
   );

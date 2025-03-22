@@ -34,7 +34,32 @@ sql.connect(config, (err) => {
 // Middleware для обработки JSON
 app.use(express.json());
 
-// Пример API для получения данных
+// получение данных
+app.post('/api/login', async (req, res) => {
+  const { fullName, password } = req.body;
+
+  try {
+    const request = new sql.Request();
+    const result = await request
+      .input('fullName', sql.NVarChar, fullName)
+      .input('password', sql.NVarChar, password)
+      .query(
+        `SELECT * FROM Пользователи WHERE CONCAT(Имя, ' ', Фамилия) = @fullName AND ХэшПароля = @password`
+      );
+
+    if (result.recordset.length > 0) {
+      const user = result.recordset[0];
+      res.json({ success: true, user });
+    } else {
+      console.log('Неверные данные:', fullName, password);
+      res.status(401).json({ success: false, message: 'Неверные данные' });
+    }
+  } catch (err) {
+    console.error('Ошибка при выполнении запроса:', err);
+    res.status(500).json({ success: false, message: 'Ошибка сервера' });
+  }
+});
+
 app.get('/api/books', async (req, res) => {
   try {
     console.log('Попытка подключения к базе данных...');
@@ -42,6 +67,22 @@ app.get('/api/books', async (req, res) => {
     console.log('Выполнение SQL-запроса...');
     const result = await request.query('SELECT * FROM Книги'); 
     console.log('Данные получены:', result.recordset);
+    res.json(result.recordset);
+  } catch (err) {
+    console.error('Ошибка при выполнении запроса:', err);
+    res.status(500).send('Ошибка сервера');
+  }
+});
+
+app.get('/api/reservations/:userId', async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const request = new sql.Request();
+    const result = await request.query(
+      `SELECT * FROM Бронирования WHERE КодПользователя = ${userId}`
+    );
+
     res.json(result.recordset);
   } catch (err) {
     console.error('Ошибка при выполнении запроса:', err);
