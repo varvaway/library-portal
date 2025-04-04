@@ -16,6 +16,7 @@ function ProfilePage() {
       // Получаем бронирования пользователя
       axios.get(`http://localhost:5001/api/reservations/${storedUser.КодПользователя}`)
         .then(response => {
+          console.log('Данные с сервера:', response.data); // Логирование
           setReservations(response.data);
         })
         .catch(error => {
@@ -42,8 +43,8 @@ function ProfilePage() {
         <div className="search-bar">
           <input type="text" placeholder="Найти нужную книгу..." />
         </div>
-        <div className="account">
-          <Link to="/profile">Профиль</Link>
+        <div className="away-account">
+          <Link to="/profile">Выйти из профиля</Link>
         </div>
       </header>
 
@@ -52,18 +53,20 @@ function ProfilePage() {
           <h1>Профиль пользователя</h1>
           <div className="profile-info">
             <div className="profile-details">
-              <h2>Личная информация</h2>
-              <p><strong>ФИО:</strong> {user.Имя} {user.Фамилия}</p>
-              <p><strong>Email:</strong> {user.ЭлектроннаяПочта}</p>
+              <p><strong>Фамилия и имя пользователя:</strong> {user.Фамилия} {user.Имя} </p>
+              <p><strong>E-mail:</strong> {user.ЭлектроннаяПочта}</p>
             </div>
 
             <div className="borrowed-books">
               <h2>Бронирования</h2>
+              <p>На данный момент у Вас обнаружено {reservations.length} бронирование(ий).</p>
               {reservations.length > 0 ? (
                 <ul>
                   {reservations.map((reservation, index) => (
                     <li key={index}>
-                      <strong>Код бронирования:</strong> {reservation.КодБронирования}
+                      <strong>Книга:</strong> {reservation.Название}
+                      <br />
+                      <strong>Автор:</strong> {reservation.АвторИмя} {reservation.АвторФамилия}
                       <br />
                       <strong>Дата бронирования:</strong> {new Date(reservation.ДатаБронирования).toLocaleDateString()}
                       <br />
@@ -80,10 +83,10 @@ function ProfilePage() {
       </main>
 
       <footer className="footer">
-      <p>с 2025 ООО "Кнороз&Со" Все права защищены. Перепечатка и любое использование материалов возможно только при наличии ссылки на первоисточник.</p>
+        <p>с 2025 ООО "Кнороз&Со" Все права защищены. Перепечатка и любое использование материалов возможно только при наличии ссылки на первоисточник.</p>
       </footer>
     </div>
   );
 }
 
-export default ProfilePage;
+export default ProfilePage; 
